@@ -7,9 +7,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: 'darkmode.js',
-    library: 'Darkmode',
-    libraryTarget: 'umd',
-    umdNamedDefine: true
+    libraryTarget: 'commonjs'
   },
   module: {
     rules: [{
