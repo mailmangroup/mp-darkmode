@@ -1,14 +1,4 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define("Darkmode", [], factory);
-	else if(typeof exports === 'object')
-		exports["Darkmode"] = factory();
-	else
-		root["Darkmode"] = factory();
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+(function(e, a) { for(var i in a) e[i] = a[i]; }(exports, /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -2483,16 +2473,17 @@ function run(nodes, opt) {
 ;
 function init() {
   var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-  if (config.hasInit) return; // 只可设置一次配置
-
+  // if (config.hasInit) return; // 只可设置一次配置
   config.hasInit = true; // 记录为配置已设置
 
   var tagName = config.whitelist.tagName;
   typeof opt.error === 'function' && (config.error = opt.error);
+  config.iframe = opt.iframe; // Allow iframe as an option
 
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     config.mode = opt.mode;
-    document.getElementsByTagName('html')[0].classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
+    (config.iframe && config.iframe.contentDocument && config.iframe.contentDocument.documentElement ? config.iframe.contentDocument.documentElement // If iframe › set class to iframe html element
+    : document.getElementsByTagName('html')[0]).classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
   }
 
   opt.whitelist && opt.whitelist.tagName instanceof Array && opt.whitelist.tagName.forEach(function (item) {
@@ -2822,7 +2813,7 @@ var CssUtils = /*#__PURE__*/function () {
       var style = this[styleKey];
 
       if (style) {
-        document.head.insertAdjacentHTML('beforeend', "<style type=\"text/css\">".concat(this._config.mode === 'dark' ? style : "@media ".concat(_constant__WEBPACK_IMPORTED_MODULE_0__["MEDIA_QUERY"], " {").concat(style, "}"), "</style>"));
+        (this._config && this._config.iframe && this._config.iframe.contentDocument ? this._config.iframe.contentDocument.head : document.head).insertAdjacentHTML('beforeend', "<style type=\"text/css\">".concat(this._config.mode === 'dark' ? style : "@media ".concat(_constant__WEBPACK_IMPORTED_MODULE_0__["MEDIA_QUERY"], " {").concat(style, "}"), "</style>"));
         this[styleKey] = ''; // 写入样式表后清空内存中的数据
       }
     }
@@ -3753,6 +3744,5 @@ var TextNodeQueue = /*#__PURE__*/function () {
 
 /***/ })
 
-/******/ });
-});
+/******/ })));
 //# sourceMappingURL=darkmode.js.map

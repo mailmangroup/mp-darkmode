@@ -156,16 +156,20 @@ export function run(nodes, opt) {
 };
 
 export function init(opt = {}) {
-  if (config.hasInit) return; // 只可设置一次配置
+  // if (config.hasInit) return; // 只可设置一次配置
 
   config.hasInit = true; // 记录为配置已设置
 
   const tagName = config.whitelist.tagName;
 
   typeof opt.error === 'function' && (config.error = opt.error);
+  config.iframe = opt.iframe; // Allow iframe as an option
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     config.mode = opt.mode;
-    document.getElementsByTagName('html')[0].classList.add(HTML_CLASS);
+    ( config.iframe && config.iframe.contentDocument && config.iframe.contentDocument.documentElement
+      ? config.iframe.contentDocument.documentElement // If iframe › set class to iframe html element
+      : document.getElementsByTagName('html')[0]
+    ).classList.add(HTML_CLASS);
   }
   opt.whitelist && opt.whitelist.tagName instanceof Array && opt.whitelist.tagName.forEach(item => {
     item = item.toUpperCase();

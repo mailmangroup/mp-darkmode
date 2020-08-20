@@ -69,7 +69,10 @@ export default class CssUtils {
     const style = this[styleKey];
 
     if (style) {
-      document.head.insertAdjacentHTML('beforeend', `<style type="text/css">${this._config.mode === 'dark' ? style : `@media ${MEDIA_QUERY} {${style}}`}</style>`);
+      ( this._config && this._config.iframe && this._config.iframe.contentDocument
+        ? this._config.iframe.contentDocument.head
+        : document.head
+      ).insertAdjacentHTML('beforeend', "<style type=\"text/css\">".concat(this._config.mode === 'dark' ? style : "@media ".concat(_constant__WEBPACK_IMPORTED_MODULE_0__["MEDIA_QUERY"], " {").concat(style, "}"), "</style>"));
       this[styleKey] = ''; // 写入样式表后清空内存中的数据
     }
   }
