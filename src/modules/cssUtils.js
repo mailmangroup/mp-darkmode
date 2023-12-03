@@ -50,7 +50,7 @@ export default class CssUtils {
   }
 
   genCss(className, cssKV) {
-    return `${config.mode === 'dark' ? `html.${HTML_CLASS} ` : ''}${config.cssSelectorsPrefix && `${config.cssSelectorsPrefix} `}.${className}{${cssKV}}`;
+    return `${config.mode === 'dark' ? `${config.darkModeClassEl ? '' : 'html'}.${HTML_CLASS} ` : ''}${config.cssSelectorsPrefix && `${config.cssSelectorsPrefix} `}.${className}{${cssKV}}`;
   }
 
   addCss(css, isFirstPageStyle = false) {
