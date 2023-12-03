@@ -53,6 +53,9 @@ const config = {
   defaultDarkTextColor: DEFAULT_DARK_TEXTCOLOR,
   defaultDarkBgColor: DEFAULT_DARK_BGCOLOR,
 
+  darkModeClassEl: null,
+  appendStylesEl: null,
+
   // 设置配置
   set(type, opt, key) {
     const value = opt[key];
