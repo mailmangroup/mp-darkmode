@@ -97,6 +97,9 @@ export default class CssUtils {
     }).join('');
 
     // 写入样式表
-    styles && document.head.insertAdjacentHTML('beforeend', `<style type="text/css">${styles}</style>`);
+    if (styles) {
+      const appendStylesEl = config.appendStylesEl || document.head;
+      appendStylesEl.insertAdjacentHTML('beforeend', `<style type="text/css">${styles}</style>`);
+    }
   }
 };
