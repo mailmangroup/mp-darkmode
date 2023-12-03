@@ -15,6 +15,8 @@
  * @param {boolean}    opt.needJudgeFirstPage    是否需要判断首屏
  * @param {boolean}    opt.delayBgJudge          是否延迟背景判断
  * @param {DOM Object} opt.container             延迟运行js时使用的容器
+ * @param {DOM Oject}  opt.darkModeClassEl       Element to add dark mode class to. Defaults to document html tag
+ * @param {DOM Object} opt.appendStylesEl        Element to append dark mode class and generated style tag to. Defaults to document.head
  * @param {string}     opt.cssSelectorsPrefix    css选择器前缀
  * @param {string}     opt.defaultLightTextColor 非Dark Mode下字体颜色
  * @param {string}     opt.defaultLightBgColor   非Dark Mode下背景颜色
@@ -155,7 +157,8 @@ export function init(opt = {}) {
 
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     config.set('string', opt, 'mode');
-    opt.mode === 'dark' && document.getElementsByTagName('html')[0].classList.add(HTML_CLASS);
+    const darkModeClassEl = opt.darkModeClassEl || document.getElementsByTagName('html')[0];
+    opt.mode === 'dark' && darkModeClassEl.classList.add(HTML_CLASS);
   }
 
   config.set('function', opt, 'begin');
@@ -169,6 +172,8 @@ export function init(opt = {}) {
   config.set('string', opt, 'defaultLightBgColor');
   config.set('string', opt, 'defaultDarkTextColor');
   config.set('string', opt, 'defaultDarkBgColor');
+  config.set('dom', opt, 'darkModeClassEl');
+  config.set('dom', opt, 'appendStylesEl');
 
   if (!config.mode && mql === null && window.matchMedia) {
     // 匹配媒体查询

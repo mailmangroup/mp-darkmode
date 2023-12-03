@@ -2342,6 +2342,8 @@ __webpack_require__.r(__webpack_exports__);
  * @param {boolean}    opt.needJudgeFirstPage    是否需要判断首屏
  * @param {boolean}    opt.delayBgJudge          是否延迟背景判断
  * @param {DOM Object} opt.container             延迟运行js时使用的容器
+ * @param {DOM Oject}  opt.darkModeClassEl       Element to add dark mode class to. Defaults to document html tag
+ * @param {DOM Object} opt.appendStylesEl        Element to append dark mode class and generated style tag to. Defaults to document.head
  * @param {string}     opt.cssSelectorsPrefix    css选择器前缀
  * @param {string}     opt.defaultLightTextColor 非Dark Mode下字体颜色
  * @param {string}     opt.defaultLightBgColor   非Dark Mode下背景颜色
@@ -2481,7 +2483,8 @@ function init() {
 
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('string', opt, 'mode');
-    opt.mode === 'dark' && document.getElementsByTagName('html')[0].classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
+    var darkModeClassEl = opt.darkModeClassEl || document.getElementsByTagName('html')[0];
+    opt.mode === 'dark' && darkModeClassEl.classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
   }
 
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('function', opt, 'begin');
@@ -2495,6 +2498,8 @@ function init() {
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('string', opt, 'defaultLightBgColor');
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('string', opt, 'defaultDarkTextColor');
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('string', opt, 'defaultDarkBgColor');
+  _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('dom', opt, 'darkModeClassEl');
+  _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('dom', opt, 'appendStylesEl');
 
   if (!_modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].mode && mql === null && window.matchMedia) {
     // 匹配媒体查询
@@ -2955,7 +2960,10 @@ var CssUtils = /*#__PURE__*/function () {
         return '';
       }).join(''); // 写入样式表
 
-      styles && document.head.insertAdjacentHTML('beforeend', "<style type=\"text/css\">".concat(styles, "</style>"));
+      if (styles) {
+        var appendStylesEl = _config__WEBPACK_IMPORTED_MODULE_1__["default"].appendStylesEl || document.head;
+        appendStylesEl.insertAdjacentHTML('beforeend', "<style type=\"text/css\">".concat(styles, "</style>"));
+      }
     }
   }]);
 
