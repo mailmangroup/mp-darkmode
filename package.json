@@ -40,5 +40,11 @@
   "bugs": {
     "url": "https://github.com/wechatjs/mp-darkmode/issues"
   },
-  "homepage": "https://github.com/wechatjs/mp-darkmode#readme"
+  "homepage": "https://github.com/wechatjs/mp-darkmode#readme",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "volta": {
+    "node": "14.21.3"
+  }
 }
