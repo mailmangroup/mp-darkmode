@@ -2478,7 +2478,7 @@ function init() {
   var opt = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   if (_modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].hasInit) return; // 只可设置一次配置
 
-  _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].hasInit = true; // 记录为配置已设置
+  if (!opt.allowToggle) _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].hasInit = true; // 记录为配置已设置
 
   var tagName = _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].whitelist.tagName;
   var attribute = _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].whitelist.attribute;
@@ -2498,6 +2498,7 @@ function init() {
     opt.mode === 'dark' && document.getElementsByTagName('html')[0].classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
   }
 
+  _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('boolean', opt, 'allowToggle');
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('function', opt, 'begin');
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('function', opt, 'showFirstPage');
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('function', opt, 'error');
@@ -2685,6 +2686,8 @@ var BgNodeStack = /*#__PURE__*/function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _constant__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constant */ "./src/modules/constant.js");
+function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
+
 /**
  * @name Darkmode配置
  *
@@ -2730,6 +2733,8 @@ var config = {
   defaultLightBgColor: _constant__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_LIGHT_BGCOLOR"],
   defaultDarkTextColor: _constant__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_DARK_TEXTCOLOR"],
   defaultDarkBgColor: _constant__WEBPACK_IMPORTED_MODULE_0__["DEFAULT_DARK_BGCOLOR"],
+  darkModeClassEl: null,
+  appendStylesEl: null,
   // 设置配置
   set: function set(type, opt, key) {
     var value = opt[key];
@@ -2748,7 +2753,7 @@ var config = {
         break;
 
       case 'dom':
-        value instanceof HTMLElement && (this[key] = value);
+        _typeof(value) === 'object' && 'querySelector' in value && (this[key] = value);
         break;
 
       default:
@@ -2929,7 +2934,7 @@ var CssUtils = /*#__PURE__*/function () {
   }, {
     key: "genCss",
     value: function genCss(className, cssKV) {
-      return "".concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'dark' ? "html.".concat(_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"], " ") : '').concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].cssSelectorsPrefix && "".concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].cssSelectorsPrefix, " "), ".").concat(className, "{").concat(cssKV, "}");
+      return "".concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].mode === 'dark' ? "".concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].darkModeClassEl ? '' : 'html', ".").concat(_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"], " ") : '').concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].cssSelectorsPrefix && "".concat(_config__WEBPACK_IMPORTED_MODULE_1__["default"].cssSelectorsPrefix, " "), ".").concat(className, "{").concat(cssKV, "}");
     }
   }, {
     key: "addCss",

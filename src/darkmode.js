@@ -153,7 +153,7 @@ export function run(nodes, opt) {
 export function init(opt = {}) {
   if (config.hasInit) return; // 只可设置一次配置
 
-  config.hasInit = true; // 记录为配置已设置
+  if (!opt.allowToggle) config.hasInit = true; // 记录为配置已设置
 
   const tagName = config.whitelist.tagName;
   const attribute = config.whitelist.attribute;
@@ -173,6 +173,7 @@ export function init(opt = {}) {
     opt.mode === 'dark' && darkModeClassEl.classList.add(HTML_CLASS);
   }
 
+  config.set('boolean', opt, 'allowToggle');
   config.set('function', opt, 'begin');
   config.set('function', opt, 'showFirstPage');
   config.set('function', opt, 'error');

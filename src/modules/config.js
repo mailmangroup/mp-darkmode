@@ -70,7 +70,7 @@ const config = {
         typeof value === 'function' && (this[key] = value);
         break;
       case 'dom':
-        value instanceof HTMLElement && (this[key] = value);
+        typeof value === 'object' && 'querySelector' in value && (this[key] = value);
         break;
       default:
     }
