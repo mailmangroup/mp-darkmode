@@ -169,8 +169,15 @@ export function init(opt = {}) {
 
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     config.set('string', opt, 'mode');
+    /**
+     * @type {HTMLElement}
+     */
     const darkModeClassEl = opt.darkModeClassEl || document.getElementsByTagName('html')[0];
-    opt.mode === 'dark' && darkModeClassEl.classList.add(HTML_CLASS);
+    if (opt.mode === 'dark') {
+      darkModeClassEl.classList.add(HTML_CLASS);
+    } else {
+      darkModeClassEl.classList.remove(HTML_CLASS);
+    }
   }
 
   config.set('boolean', opt, 'allowToggle');
