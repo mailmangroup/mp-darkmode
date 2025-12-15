@@ -2497,8 +2497,17 @@ function init() {
 
   if (['dark', 'light'].indexOf(opt.mode) > -1) {
     _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('string', opt, 'mode');
+    /**
+     * @type {HTMLElement}
+     */
+
     var darkModeClassEl = opt.darkModeClassEl || document.getElementsByTagName('html')[0];
-    opt.mode === 'dark' && darkModeClassEl.classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
+
+    if (opt.mode === 'dark') {
+      darkModeClassEl.classList.add(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
+    } else {
+      darkModeClassEl.classList.remove(_modules_constant__WEBPACK_IMPORTED_MODULE_0__["HTML_CLASS"]);
+    }
   }
 
   _modules_config__WEBPACK_IMPORTED_MODULE_1__["default"].set('boolean', opt, 'allowToggle');
